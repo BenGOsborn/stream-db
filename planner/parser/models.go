@@ -1,35 +1,35 @@
 package parser
 
 type QueryPlan struct {
-	Select SelectAction
-	From   FromAction
-	Where  *Filter
+	Select SelectAction `json:"select"`
+	From   FromAction   `json:"from"`
+	Where  *Filter      `json:"where,omitempty"`
 }
 
 type SelectAction struct {
-	Columns []string
+	Columns []string `json:"columns"`
 }
 
 type FromAction struct {
-	Tables []string
+	Tables []string `json:"tables"`
 }
 
-type LogicalOperator uint8
+type LogicalOperator string
 
 const (
-	LogicalOperatorAnd LogicalOperator = 1
-	LogicalOperatorOr  LogicalOperator = 2
+	LogicalOperatorAnd LogicalOperator = "AND"
+	LogicalOperatorOr  LogicalOperator = "OR"
 )
 
 type Filter struct {
-	Left            *Filter
-	LogicalOperator LogicalOperator
-	Right           *Filter
-	Comparison      *Comparison
+	Left            *Filter         `json:"left,omitempty"`
+	LogicalOperator LogicalOperator `json:"logicalOperator,omitempty"`
+	Right           *Filter         `json:"right,omitempty"`
+	Comparison      *Comparison     `json:"comparison,omitempty"`
 }
 
 type Comparison struct {
-	Left     string
-	Operator string
-	Right    string
+	Left     string `json:"left"`
+	Operator string `json:"operator"`
+	Right    string `json:"right"`
 }
